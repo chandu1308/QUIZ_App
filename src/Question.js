@@ -1,36 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Question = ({
+export default function Question({
   displayQuestion,
   onSelctOption,
   currentQuestionAnswer,
-}) => {
-  console.log("displayQuestion", displayQuestion);
-  console.log("currentQuestionAnswer", currentQuestionAnswer);
-
+}) {
   const { id, question, options } = displayQuestion;
+
   return (
-    <div style={{ width: "100%" }} key={id}>
-      <h3>{question}</h3>
-      <div className="options">
-        {options.map((option) => {
+    <div className="question-content">
+      <h2>{question}</h2>
+      <fieldset className="options">
+        <legend className="sr-only">Choose one answer</legend>
+        {options.map((option, index) => {
+          const isSelected = currentQuestionAnswer.optionID === option.id;
           return (
-            <label style={{ fontSize: "20px" }} key={option.id}>
+            <label
+              className={`option-card${isSelected ? " is-selected" : ""}`}
+              key={option.id}
+            >
               <input
                 type="radio"
                 name={id}
-                checked={currentQuestionAnswer.optionID == option.id}
-                onChange={(e) => {
-                  onSelctOption(id, option.id);
-                }}
+                value={option.id}
+                checked={isSelected}
+                onChange={() => onSelctOption(id, option.id)}
               />
-              {option.label}
+              <span className="option-letter" aria-hidden="true">
+                {String.fromCharCode(65 + index)}
+              </span>
+              <span className="option-label">{option.label}</span>
+              <span className="option-indicator" aria-hidden="true" />
             </label>
           );
         })}
-      </div>
+      </fieldset>
     </div>
   );
-};
-
-export default Question;
+}

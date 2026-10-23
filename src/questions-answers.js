@@ -2,6 +2,7 @@ export const quizQuestions = [
   {
     id: "js-q0",
     question: "How many primitive types are there in JavaScript?",
+    correctAnswerId: "opt4",
     options: [
       {
         id: "opt1",
@@ -24,6 +25,7 @@ export const quizQuestions = [
   {
     id: "js-q1",
     question: "Which keyword is used to declare a constant in JavaScript?",
+    correctAnswerId: "opt3",
     options: [
       {
         id: "opt1",
@@ -46,6 +48,7 @@ export const quizQuestions = [
   {
     id: "js-q2",
     question: "What does NaN stand for?",
+    correctAnswerId: "opt1",
     options: [
       {
         id: "opt1",
@@ -68,6 +71,7 @@ export const quizQuestions = [
   {
     id: "js-q3",
     question: "Which method is used to add an element to the end of an array?",
+    correctAnswerId: "opt1",
     options: [
       {
         id: "opt1",
@@ -90,6 +94,7 @@ export const quizQuestions = [
   {
     id: "js-q4",
     question: "What is the result of typeof null?",
+    correctAnswerId: "opt3",
     options: [
       {
         id: "opt1",
@@ -112,6 +117,7 @@ export const quizQuestions = [
   {
     id: "js-q5",
     question: "Which operator is used for strict equality comparison?",
+    correctAnswerId: "opt2",
     options: [
       {
         id: "opt1",
@@ -134,6 +140,7 @@ export const quizQuestions = [
   {
     id: "js-q6",
     question: "What is the correct way to write a comment in JavaScript?",
+    correctAnswerId: "opt2",
     options: [
       {
         id: "opt1",
@@ -156,6 +163,7 @@ export const quizQuestions = [
   {
     id: "js-q7",
     question: "Which method converts a JSON string into a JavaScript object?",
+    correctAnswerId: "opt1",
     options: [
       {
         id: "opt1",
@@ -178,6 +186,7 @@ export const quizQuestions = [
   {
     id: "js-q8",
     question: "What does the 'this' keyword refer to?",
+    correctAnswerId: "opt3",
     options: [
       {
         id: "opt1",

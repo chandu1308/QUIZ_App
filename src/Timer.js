@@ -1,64 +1,45 @@
-import { useState, useEffect, useRef } from "react";
-import "./styles.css";
+import React, { useEffect, useState } from "react";
 
 const Timer = ({ totalTime, onComplete }) => {
-  const [timer, setTimer] = useState(totalTime);
-  // const [quiz, setQuiz] = useState(true);
-
-  const timerIdRef = useRef(null);
-  function startOrResume() {
-    // setQuiz(true);
-    if (timerIdRef.current) {
-      clearInterval(timerIdRef.current);
-    }
-    timerIdRef.current = setInterval(() => {
-      setTimer((timer) => {
-        const [hours, minutes, seconds] = timer.split(":").map((str) => +str); //[1, 1, 0]
-
-        let resultHours = hours,
-          resultMinutes = minutes,
-          resultSeconds = seconds;
-        if (seconds === 0) {
-          resultSeconds = 59; // sec = 59
-          if (minutes === 0) {
-            resultHours = hours - 1; // hr => 1-1 = 0
-            resultMinutes = 59; //
-          } else {
-            resultMinutes = minutes - 1; // min => 1-1 = 0
-          }
-        } else {
-          resultSeconds = seconds - 1;
-        }
-
-        const result = [resultHours, resultMinutes, resultSeconds]
-          .map((num) => num.toString().padStart(2, "0")) // ["00","59","59"]
-          .join(":"); // "00:59:59"
-        return result; // "00:59:59"
-      });
-    }, 1000);
-  }
+  const [hours, minutes, seconds] = totalTime.split(":").map(Number);
+  const initialSeconds = hours * 3600 + minutes * 60 + seconds;
+  const [remainingSeconds, setRemainingSeconds] = useState(initialSeconds);
 
   useEffect(() => {
-    // console.log("chandu");
-    startOrResume();
-  }, []);
-
-  const isTimerCompleted = timer === "00:00:00";
-
-  useEffect(() => {
-    if (isTimerCompleted) {
-      // setQuiz(false);
-      // setTimer("00:05:00");
-      clearInterval(timerIdRef.current);
-      timerIdRef.current = null;
+    if (remainingSeconds <= 0) {
       onComplete();
-      // alert("Timer Ended");
+      return undefined;
     }
-  }, [isTimerCompleted]);
+
+    const intervalId = window.setInterval(() => {
+      setRemainingSeconds((remaining) => Math.max(remaining - 1, 0));
+    }, 1000);
+
+    return () => window.clearInterval(intervalId);
+  }, [remainingSeconds, onComplete]);
+
+  const formattedTime = [3600, 60, 1]
+    .map((unit) =>
+      String(Math.floor(remainingSeconds / unit) % (unit === 3600 ? 100 : 60)).padStart(
+        2,
+        "0"
+      )
+    )
+    .join(":");
+  const isLowTime = remainingSeconds <= 60;
+
   return (
-    <h3 className="timer" style={{ textAlign: "center", color: "red" }}>
-      {timer}
-    </h3>
+    <div
+      className={`timer${isLowTime ? " timer-low" : ""}`}
+      role="timer"
+      aria-label={`${formattedTime} remaining`}
+    >
+      <span className="timer-icon" aria-hidden="true">◷</span>
+      <span className="timer-copy">
+        <span className="timer-label">TIME LEFT</span>
+        <strong>{formattedTime}</strong>
+      </span>
+    </div>
   );
 };
 
